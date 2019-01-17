@@ -6,7 +6,9 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"os"
 
+	flags "github.com/jessevdk/go-flags"
 	yaml "gopkg.in/yaml.v2"
 )
 
@@ -18,6 +20,12 @@ type CountDown struct {
 	Name string `yaml:"name"`
 	Date string `yaml:"date"`
 }
+
+type Options struct {
+	Port string `short:"p" long:"port" description:"port" default:"12000"`
+}
+
+var opts Options
 
 func htmlHandler(w http.ResponseWriter, req *http.Request) {
 
@@ -58,19 +66,14 @@ func countdownHandeler(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-	buf, err := ioutil.ReadFile("countdown.yaml")
+	_, err := flags.Parse(&opts)
 	if err != nil {
-		log.Fatalln(err)
-	}
-	var d CountDownData
-	err = yaml.Unmarshal(buf, &d)
-	if err != nil {
-		log.Fatalln(err)
+		os.Exit(1)
 	}
 
 	http.Handle("/resources/", http.StripPrefix("/resources/", http.FileServer(http.Dir("resources/"))))
 	http.HandleFunc("/countdown", countdownHandeler)
 	http.HandleFunc("/", htmlHandler)
 
-	http.ListenAndServe(":12000", nil)
+	http.ListenAndServe(":"+opts.Port, nil)
 }
