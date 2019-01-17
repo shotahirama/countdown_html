@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+
+<head>
+    <title>{{.key1}}</title>
+    <link rel="stylesheet" type="text/css" href="./resources/countdate.css">
+</head>
+
+<html>
+    <body>      
+        <p>現在<br><span id="now"></span></p>
+        <p>{{.key1}}<br><span id="limitdate"></span></p>
+        <h1 class="marquee">{{.key1}}まで</h1>
+        <h1 class="timer"><span id="timelimit"></span></h1>
+    </body>
+
+    <script src="./resources/countdate.js"></script>
+    <script>
+        countdate({{.key2}});
+    </script>
+</html>

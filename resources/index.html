@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<head>
+        <title>COUNTDOWN</title>
+    
+        <style>
+          body{
+            text-align: center
+          }
+          a{
+            font-size: 500%;
+          }
+          p{
+            line-height: 2;
+          }
+        </style>
+      </head>
+
+<body>
+    {{range .}}
+    <p>
+        <a href="{{.URL}}">{{.name}}</a>
+    </p>
+    {{end}}
+</body>

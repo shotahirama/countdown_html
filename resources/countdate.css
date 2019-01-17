@@ -1,0 +1,74 @@
+body {
+  background-color: #000000;
+  overflow-x: hidden;
+  } 
+  p{
+    background: #ff0000;
+  }
+/* h1{
+    line-height: 2;
+  background: #ff0000;
+  font-size: 800%;
+  text-align: center;
+} */
+
+
+h1.timer{
+    line-height: 2;
+  background: #ff0000;
+  font-size: 800%;
+  text-align: center;
+}
+
+
+ h1.marquee {
+  animation-name: marquee;
+animation-timing-function: linear;
+animation-duration: 5s;
+animation-iteration-count: infinite;
+display: inline-block;
+/* 折り返されないようにする */
+white-space:nowrap;
+/* .marquee-container分、左にpaddingを設定し、メッセージを右に追い出す */
+padding-left: 100%;
+    line-height: 1;
+  color: #ff0000;
+  font-size: 800%;
+  text-align: center;
+  white-space: nowrap;
+}
+@keyframes marquee {
+from   { transform: translate(0);} 
+to { transform: translate(-100%);}
+}
+
+@media only screen  and (max-width:1366px) {
+h1.timer{
+    line-height: 1.5;
+  background: #ff0000;
+  font-size: 550%;
+  text-align: center;
+}
+
+
+ h1.marquee {
+  animation-name: marquee;
+animation-timing-function: linear;
+animation-duration: 5s;
+animation-iteration-count: infinite;
+display: inline-block;
+/* 折り返されないようにする */
+white-space:nowrap;
+/* .marquee-container分、左にpaddingを設定し、メッセージを右に追い出す */
+padding-left: 100%;
+    line-height: 1;
+  color: #ff0000;
+  font-size: 800%;
+  text-align: center;
+  white-space: nowrap;
+}
+@keyframes marquee {
+from   { transform: translate(0);} 
+to { transform: translate(-100%);}
+}
+}
