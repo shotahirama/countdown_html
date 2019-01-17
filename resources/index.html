@@ -5,7 +5,7 @@
     
         <style>
           body{
-            text-align: center
+            text-align: center;
           }
           a{
             font-size: 500%;
@@ -13,10 +13,17 @@
           p{
             line-height: 2;
           }
+          p.ye{
+            font-size: 30%;
+            text-align: right;
+          }
         </style>
       </head>
 
 <body>
+  <p class="ye">
+    <a href="/yamledit">YAML Edit</a>
+  </p>
     {{range .}}
     <p>
         <a href="{{.URL}}">{{.name}}</a>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<head>
+    <title>YAML Edit Page</title>
+    <style>
+        p.top{
+        font-size: 100%;
+        text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <p class="top">
+        <a href="/">TOP</a>
+    </p>
+    <table border="1">
+        <tr>
+            <td>NAME</td>
+            <td>DATE</td>
+        </tr>
+        {{range .}}
+        <tr>
+            <td>{{.name}}</td>
+            <td>{{.date}}</td>
+        </tr>
+        {{end}}
+    </table>
+    <br><br>
+
+    <table border="0">
+        <tr>
+            <td>NAME:</td>
+            <td><input type="text" name="name" id="addname"></td>
+        </tr>
+        <tr>
+            <td>DATE:</td>
+            <td><input type="datetime-local" name="date" id="adddate" value="2000-01-01T00:00"></td>
+        </tr>
+        <tr>
+            <td>
+                <input type="button" value="Add Col" id="coladd" onclick="coladdbuttonClick()">
+            </td>
+        </tr>
+    </table>
+    <br><br>
+        
+    <table id="table" border="1">
+        <tr>
+            <td></td>
+            <td>NAME</td>
+            <td>DATE</td>
+        </tr>
+    </table>
+    <input type="button" value="submit" onclick="postbuttonClick()">
+
+
+<script>
+    function nowdatestr(){
+        var d = new Date();
+        return d.getFullYear()+'-'+(("0"+(d.getMonth() + 1)).slice(-2))+'-'+("0"+d.getDate()).slice(-2)+'T'+("0"+d.getHours()).slice(-2)+':'+("0"+d.getMinutes()).slice(-2)
+    }
+    window.onload = function(){
+        {{range .}}
+            coladd({{.name}}, {{.date}});
+        {{end}}
+        var date = document.getElementById("adddate");
+        date.value = nowdatestr();
+    }
+    function coladd(name, date) {
+        var table = document.getElementById("table");
+        var row = table.insertRow(-1);
+        var cell1 = row.insertCell(-1);
+        var cell2 = row.insertCell(-1);
+        var cell3 = row.insertCell(-1);
+        cell1.innerHTML = '<input type="button" value="×" id="coladd" onclick="coldel(this)">';
+        cell2.innerHTML = name;
+        cell3.innerHTML = date;
+    }
+    function coldel(obj) {
+        tr = obj.parentNode.parentNode;
+        tr.parentNode.deleteRow(tr.sectionRowIndex);
+    }
+    function coladdbuttonClick(){
+        var name = document.getElementById("addname");
+        var date = document.getElementById("adddate");
+        if(name.value!=''){
+            coladd(name.value, date.value.replace('T', ' '));
+            name.value = "";
+            date.value = nowdatestr();
+        }
+    }
+    function postbuttonClick(){
+        var form = document.createElement('form');
+
+        form.method="POST";
+        form.action="/yamlpost";
+
+        var table = document.getElementById("table");
+        for(var i=1;i<table.rows.length;i++){
+            var name = table.rows[i].cells[1].innerHTML;
+            var value = table.rows[i].cells[2].innerHTML;
+            var request = document.createElement('input');
+            request.type = 'hidden';
+            request.name = name;
+            request.value = value;
+            form.appendChild(request);
+        }
+        document.body.appendChild(form);
+        form.submit();
+    }
+    </script>
+</body>
