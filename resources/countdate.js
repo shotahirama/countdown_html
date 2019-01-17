@@ -4,7 +4,6 @@ function countdate(limitdatestr){
   var limitdate = document.getElementById('limitdate');
   var timelimit = document.getElementById('timelimit');
 
-  // var limitDate = new Date('2019/01/11 13:00');
   var limitDate = new Date(limitdatestr);
   limitdate.textContent = limitDate.toLocaleString();
   timer = setInterval(function(){

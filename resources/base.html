@@ -1,20 +1,44 @@
 <!DOCTYPE html>
 
 <head>
-    <title>{{.key1}}</title>
-    <link rel="stylesheet" type="text/css" href="./resources/countdate.css">
+  <title>COUNTDOWN</title>
+  <link rel="stylesheet" type="text/css" href="./resources/countdate.css">
 </head>
 
 <html>
-    <body>      
-        <p>現在<br><span id="now"></span></p>
-        <p>{{.key1}}<br><span id="limitdate"></span></p>
-        <h1 class="marquee">{{.key1}}まで</h1>
-        <h1 class="timer"><span id="timelimit"></span></h1>
-    </body>
 
-    <script src="./resources/countdate.js"></script>
-    <script>
-        countdate({{.key2}});
-    </script>
+<body>
+  <p>現在<br><span id="now"></span></p>
+  <p>
+    <span id="name"></span>
+    <br><span id="limitdate"></span>
+  </p>
+  <h1 class="marquee"><span id="name"></span>まで</h1>
+  <h1 class="timer"><span id="timelimit"></span></h1>
+</body>
+
+<script src="./resources/countdate.js"></script>
+<script>
+  function parseQuery() {
+    query = window.location.search.slice(1).split('&');
+    var vars = []
+    query.forEach(q => {
+      splitq = q.split('=');
+      vars[splitq[0]] = splitq[1];
+    });
+
+    return vars;
+  }
+
+  window.onload = function(){
+    vars = parseQuery();
+    var nameelements = document.querySelectorAll('[id=name]');
+    for(var i=0;i<nameelements.length;i++){
+        nameelements[i].textContent = decodeURIComponent(vars["name"]);
+    }
+    countdate(unescape(vars["timelimit"]).replace('+', ' '));
+  }
+
+</script>
+
 </html>
